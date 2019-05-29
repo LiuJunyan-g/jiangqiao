@@ -9,7 +9,7 @@ import add_land from '@/components/add_land'
 import plant_resource from '@/components/plant_resource'
 import building_resource from '@/components/building_resource'
 import store_resource from '@/components/store_resource'
-
+import untreated_info from '@/components/untreated_info'
 
 
 Vue.use(Router)
@@ -60,6 +60,11 @@ export default new Router({
 			path: '/add_land',
 			name: 'add_land',
 			component: add_land
+		},
+		{
+			path: '/untreated_info',
+			name: 'untreated_info',
+			component: untreated_info
 		}
 	]
 })

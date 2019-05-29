@@ -1,454 +1,205 @@
 <template>
-  <div class="ordertracking_box">
-    <div class="serach">
-      <!-- <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-1 col-sm-1">K&S订单号：</div>
-          <div class="col-md-3 col-sm-3">
-            <input class="form-control" type="text" placeholder="订单号">
-          </div>
+	<div class="bing" id="main" style="width: 100%; height: 90%;border-box;padding: 20px;">
 
-          <div class="col-md-1 col-sm-1">客户：</div>
-          <div class="col-md-3 col-sm-3">
-            <input class="form-control" type="text" placeholder="客户">
-          </div>
-
-          <div class="col-md-1 col-sm-1">供应商：</div>
-          <div class="col-md-3 col-sm-4">
-            <input class="form-control" type="text" placeholder="供应商">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-1 col-sm-1">零件名称：</div>
-          <div class="col-md-3 col-sm-3">
-            <input class="form-control" type="text" placeholder="零件名称">
-          </div>
-
-          <div class="col-md-1 col-sm-1">零件编码：</div>
-          <div class="col-md-3 col-sm-3">
-            <input class="form-control" type="text" placeholder="零件编码">
-          </div>
-
-          <div class="col-md-1 col-sm-1">检验项目：</div>
-          <div class="col-md-3 col-sm-3">
-            <input class="form-control" type="text" placeholder="检验项目">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-1 col-sm-1">检验日期：</div>
-          <div class="col-md-3 col-sm-4">
-            <input class="form-control" type="date" placeholder="检查时间" required="required">
-          </div>
-          <div class="col-md-1 col-sm-1">分组依据：</div>
-          <div class="col-md-3 col-sm-4">
-            <input class="form-control" type="text" placeholder="分组依据" required="required">
-          </div>
-          <div class="col-md-1 col-sm-1">排行数：</div>
-          <div class="col-md-3 col-sm-4">
-            <input class="form-control" type="number" placeholder="排行数">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-1 col-sm-1"></div>
-          <div class="col-md-3 col-sm-4"></div>
-          <div class="col-md-1 col-sm-1"></div>
-          <div class="col-md-3 col-sm-4"></div>
-          <div class="col-md-1 col-sm-1"></div>
-          <div class="col-md-3 col-sm-4">
-            <button class="btn btn-primary">查询</button>
-            <button class="btn btn-default">重置</button>
-          </div>
-        </div>
-      </div> -->
-    </div>
-    <div class="space" style="height:30px;background-color:#F0F2F5;"></div>
-    <div>
-      <div id="myChart" style="width:700px;height:600px"></div>
-      <div class="partList">
-        <ul>
-          <li>180501-10-c</li>
-          <li>180501-10-c</li>
-          <li>180501-10-c</li>
-          <li>180501-10-c</li>
-          <li>180501-10-c</li>
-        </ul>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <div id="newChart" style="width:900px;height:600px"></div>
-  </div>
+	</div>
 </template>
 
-<script>
-export default {
-  name: "hello",
-  data() {
-    return {
-      msg: "Welcome to Your Vue.js App"
-    };
-  },
-  mounted() {
-    this.drawLine();
-    
-  },
-  methods: {
-    drawLine() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("myChart"));
-      var data = [
-        {
-          name: "主体",
-          itemStyle: {
-            color: "#ad213e"
-          },
-          children: [
-            {
-              name: "生锈",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((9785 / 55484) * 100).toFixed(2) + "%" + "   " + 9785,
-                  value: 9785,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "脏污",
-              itemStyle: {
-                color: "#cc3d41"
-              },
-              children: [
-                {
-                  name: ((1500 / 55484) * 100).toFixed(2) + "%" + "   " + 1500,
-                  value: 2000,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "墨斑",
-              itemStyle: {
-                color: "#b14d57"
-              },
-              children: [
-                {
-                  name: ((1500 / 55484) * 100).toFixed(2) + "%" + "   " + 1500,
-                  value: 1500,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "多料",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((2500 / 55484) * 100).toFixed(2) + "%" + "   " + 2500,
-                  value: 2000,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "粉皮",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((2500 / 55484) * 100).toFixed(2) + "%" + "   " + 2500,
-                  value: 2500,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "压痕",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((1500 / 55484) * 100).toFixed(2) + "%" + "   " + 1500,
-                  value: 1500,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "压痕",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((1500 / 55484) * 100).toFixed(2) + "%" + "   " + 1500,
-                  value: 1500,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "磕伤",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((2000 / 55484) * 100).toFixed(2) + "%" + "   " + 2000,
-                  value: 2000,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "压伤",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((2300 / 55484) * 100).toFixed(2) + "%" + "   " + 2300,
-                  value: 2300,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            },
-            {
-              name: "沙眼",
-              itemStyle: {
-                color: "#794752"
-              },
-              children: [
-                {
-                  name: ((3000 / 55484) * 100).toFixed(2) + "%" + "   " + 3000,
-                  value: 3000,
-                  itemStyle: {
-                    color: "black"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: "外观",
-          itemStyle: {
-            color: "#a87b64"
-          },
-          children: [
-            {
-              name: "外观",
-              itemStyle: {
-                color: "#c78869"
-              },
-              children: [
-                {
-                  name:
-                    ((11959 / 55484) * 100).toFixed(2) + "%" + "   " + 11959,
-                  value: 11959,
-                  itemStyle: {
-                    color: "#C78869"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: "齿部",
-          itemStyle: {
-            color: "#e65832"
-          },
-          children: [
-            {
-              name: "齿部缺陷",
-              itemStyle: {
-                color: "#d45a59"
-              },
-              children: [
-                {
-                  name: ((3200 / 55484) * 100).toFixed(2) + "%" + "   " + 3200,
-                  value: 3200,
-                  itemStyle: {
-                    color: "#da5c1f"
-                  }
-                }
-              ]
-            },
-            {
-              name: "非齿部缺陷",
-              itemStyle: {
-                color: "#d45a59"
-              },
-              children: [
-                {
-                  name: ((2000 / 55484) * 100).toFixed(2) + "%" + "   " + 2000,
-                  value: 2000,
-                  itemStyle: {
-                    color: "#da5c1f"
-                  }
-                }
-              ]
-            },
-            {
-              name: "其他缺陷",
-              itemStyle: {
-                color: "#d45a59"
-              },
-              children: [
-                {
-                  name:
-                    ((11740 / 55484) * 100).toFixed(2) + "%" + "   " + 11740,
-                  value: 11740,
-                  itemStyle: {
-                    color: "#da5c1f"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ];
-      //55484
-      myChart.setOption({
-        title: {
-          // subtext:"Source: https://worldcoffeeresearch.org/work/sensory-lexicon/",
-          textStyle: {
-            fontSize: 14,
-            align: "center"
-          },
-          subtextStyle: {
-            align: "center"
-          },
-          sublink: "https://worldcoffeeresearch.org/work/sensory-lexicon/"
-        },
-        series: {
-          type: "sunburst",
-          highlightPolicy: "ancestor",
-          data: data,
-          radius: [0, "95%"],
-          sort: null,
-          levels: [
-            {},
-            {
-              r0: "15%",
-              r: "35%",
-              itemStyle: {
-                borderWidth: 2
-              },
-              label: {
-                rotate: "tangential"
-              }
-            },
-            {
-              r0: "35%",
-              r: "70%",
-              label: {
-                align: "right"
-              }
-            },
-            {
-              r0: "70%",
-              r: "72%",
-              label: {
-                position: "outside",
-                padding: 3,
-                silent: false
-              },
-              itemStyle: {
-                borderWidth: 3
-              }
-            }
-          ]
-        }
-      });
-    }
-    }
-}
-</script>
 
+<script type="text/javascript">
+	import * as echarts from 'echarts';
+	var echart = require('echarts');
+	export default{
+		name:"homepage",
+		data(){
+			return{data:""}
+		},
+		mounted(){
+		var echarts1= document.getElementById('main');	
+	
+
+		this.$axios({
+			method: "GET",
+			url: "http://127.0.0.1:8000/api/home_page/?user_id=" + localStorage.getItem("user_id"),
+		}).then(res => {
+			console.log(res.data.builderJson.charts)
+			
+			var waterMarkText = 'ECHARTS';
+			
+			var canvas = document.createElement('canvas');
+			var ctx = canvas.getContext('2d');
+			canvas.width = canvas.height = 100;
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.globalAlpha = 0.08;
+			ctx.font = '20px Microsoft Yahei';
+			ctx.translate(50, 50);
+			ctx.rotate(-Math.PI / 4);
+			ctx.fillText(waterMarkText, 0, 0);
+			
+			var option = {
+			    backgroundColor: {
+			        type: 'pattern',
+			        image: canvas,
+			        repeat: 'repeat'
+			    },
+			    tooltip: {},
+			    title: [{
+			        text: '田地种植种类面积统计图',
+					subtext: '总计 ' + res.data.builderJson.all,
+			        x: '30%',
+					
+			        textAlign: 'center'
+			    }, {
+			        text: '江桥镇各类已通过审批资源条数',
+					subtext: '总计 ' + Object.keys(res.data.downloadJson).reduce(function (all, key) {
+					return all + res.data.downloadJson[key];
+					}, 0),
+			        x: '75%',
+					y: '-1.1%',
+			        textAlign: 'center'
+			    }, {
+			        text: '主题下载',
+					subtext: '总计 ' + Object.keys(res.data.themeJson).reduce(function (all, key) {
+						return all + res.data.themeJson[key];
+					}, 0),
+			        x: '75%',
+			        y: '47%',
+			        textAlign: 'center'
+			    }],
+			    grid: [{
+			        top: 50,
+			        width: '50%',
+			        bottom: '45%',
+			        left: 50,
+			        containLabel: true
+			    }, {
+			        top: '55%',
+			        width: '50%',
+			        bottom: 0,
+			        left: 40,
+			        containLabel: true
+			    }],
+			    xAxis: [{
+			        type: 'value',
+			        splitLine: {
+			            show: false
+			        }
+			    }, {
+			        type: 'value',
+			        gridIndex: 1,
+			        splitLine: {
+			            show: false
+			        }
+			    }],
+			    yAxis: [{
+			        type: 'category',
+			        data: Object.keys(res.data.builderJson.charts),
+			        axisLabel: {
+			            interval: 0,
+			            rotate: 30
+			        },
+			        splitLine: {
+			            show: false
+			        }
+			    }, {
+			        gridIndex: 1,
+			        type: 'category',
+			        data: Object.keys(res.data.builderJson.components),
+			        axisLabel: {
+			            interval: 0,
+			            rotate: 30
+			        },
+			        splitLine: {
+			            show: false
+			        }
+			    }],
+			    series: [{
+			        type: 'bar',
+			        stack: 'chart',
+			        z: 3,
+			        label: {
+			            normal: {
+			                position: 'right',
+			                show: true
+			            }
+			        },
+			        data: Object.keys(res.data.builderJson.charts).map(function (key) {
+			            return res.data.builderJson.charts[key];
+			        })
+			    }, {
+			        type: 'bar',
+			        stack: 'chart',
+			        silent: true,
+			        itemStyle: {
+			            normal: {
+			                color: '#eee'
+			            }
+			        },
+			        data: Object.keys(res.data.builderJson.charts).map(function (key) {
+			            return res.data.builderJson.all;
+			        })
+			    }, {
+			        type: 'bar',
+			        stack: 'component',
+			        xAxisIndex: 1,
+			        yAxisIndex: 1,
+			        z: 3,
+			        label: {
+			            normal: {
+			                position: 'right',
+			                show: true
+			            }
+			        },
+			        data: Object.keys(res.data.builderJson.components).map(function (key) {
+			            return res.data.builderJson.components[key];
+			        })
+			    }, {
+			        type: 'bar',
+			        stack: 'component',
+			        silent: true,
+			        xAxisIndex: 1,
+			        yAxisIndex: 1,
+			        itemStyle: {
+			            normal: {
+			                color: '#eee'
+			            }
+			        },
+			        data: Object.keys(res.data.builderJson.components).map(function (key) {
+			            return res.data.builderJson.all;
+			        })
+			    }, {
+			        type: 'pie',
+			        radius: [0, '30%'],
+			        center: ['75%', '25%'],
+			        data: Object.keys(res.data.downloadJson).map(function (key) {
+			            return {
+			                name: key.replace('.js', ''),
+			                value: res.data.downloadJson[key]
+			            }
+			        })
+			    }, {
+			        type: 'pie',
+			        radius: [0, '30%'],
+			        center: ['75%', '75%'],
+			        data: Object.keys(res.data.themeJson).map(function (key) {
+			            return {
+			                name: key.replace('.js', ''),
+			                value: res.data.themeJson[key]
+			            }
+			        })
+			    }]
+			}			
+					echart.init(echarts1).setOption(option);
+			})
+
+
+
+
+		}
+	}
+	  
+</script>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.space {
-  margin-bottom: 20px;
-}
-.col-md-1 {
-  line-height: 34px;
-}
-.clear {
-  clear: both;
-}
-#myChart {
-  width: 900px;
-  height: 600px;
-  float: left;
-}
-.ordertracking_box {
-  width: 98%;
-  margin: 0 auto;
-  background-color: white;
-  margin-top: 10px;
-  min-height: 680px;
-  padding: 20px;
-  min-width: 950px;
-  /* min-width: 990px; */
-}
-.partList {
-  float: left;
-}
-.table_kind span {
-  padding: 15px 20px;
-  cursor: pointer;
-}
-.table_kind {
-  height: 50px;
-  width: 95%;
-  margin: 0 auto;
-  border-bottom: 2px solid gray;
-  box-sizing: border-box;
-  line-height: 50px;
-  margin-bottom: 15px;
-}
-.serach {
-  margin-bottom: 20px;
-}
-.col-md-8 {
-  text-align: right;
-}
-.btn {
-  margin-left: 10px;
-}
-.row > div {
-  padding: 0;
-}
-.row .col-md-1 {
-  text-align: right;
-  padding-right: 5px;
-}
-.row {
-  margin-bottom: 10px;
-}
+	
 </style>

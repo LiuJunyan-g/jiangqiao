@@ -1,165 +1,257 @@
 <template>
-	<div>
-		<el-container>
-			<el-aside width="200px">
-				<div>
-									<el-select v-model="value" clearable placeholder="新建账户">
-						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
+	<div id="index">
+
+		<div class="indexRight">
+			<h2>新增账户</h2>
+			<button id="adduser" @click="add()"> 新增帐户</button>
+			<div class="userList">
+				<table>
+					<tr>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+						<td style="width: 140px">操作</td>
+					</tr>
+					<tr v-for="(item,i) in list" >
+						<td style="height:30px;">{{i+1}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.pwd}}</td>
+						<td>{{item.role}}</td>
+						<td style="width: 100px">
+							<span @click="updata(i)">编辑</span>
+							<span @click="del(i)">删除</span>
+						</td>
+					</tr>
+				</table>
+				<div class="changePage">
+	
+			<div class="block">
+  			<el-pagination
+    			layout="prev, pager, next"
+   				 :total="num">
+ 			</el-pagination>
+			</div>
 				</div>
-			</el-aside>
-			<el-container>
-				<el-header>新增账户</el-header>
-				<el-main>
-					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
-						<el-table-column type="selection" width="55">
-						</el-table-column>
-						<el-table-column label="日期" width="120">
-							<template slot-scope="scope">{{ scope.row.date }}</template>
-						</el-table-column>
-						<el-table-column prop="name" label="姓名" width="120">
-						</el-table-column>
-						<el-table-column prop="address" label="地址" show-overflow-tooltip>
-						</el-table-column>
-						<el-table-column label="操作">
-							<template slot-scope="scope">
-								<el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-								<el-button
-					  size="mini"
-					  type="danger"
-					  @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-							</template>
-						</el-table-column>
-					</el-table>
-					<div style="margin-top: 20px">
-						<el-button @click="toggleSelection([tableData[1], tableData[2]])">切换第二、第三行的选中状态</el-button>
-						<el-button @click="toggleSelection()">取消选择</el-button>
+			</div>
+			<div style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 10;background: rgba(0,0,0,0.5);" v-show="isshow">
+			<div class="msg" >
+				<div>
+					<h1>{{msg}}</h1>
+					<div class="msgChange">
+						<span>
+							用户名
+						</span>
+						<input type="text" v-model="name" />
 					</div>
-					<el-pagination background layout="prev, pager, next" :total="count">
-					</el-pagination>
-				</el-main>
-				<el-footer>Footer</el-footer>
-			</el-container>
-		</el-container>
+					<div class="msgChange">
+						<span>
+							密码
+						</span>
+						<input type="text" v-model="pwd" />
+					</div>
+					<div class="msgChange">
+						<span>
+							角色
+						</span>
+						<input type="text" v-model="role" />
+					</div>
+					<button @click="enter1()">确定</button>
+					<button @click="cencel()">取消</button>
+				</div>
+
+			</div>
+			</div>
+		</div>
+
 	</div>
 </template>
 
 <script>
+	import axios from 'axios';
 	export default {
-		name: 'App',
+		name: "Index",
 		data() {
 			return {
-				activeIndex2: localStorage.getItem("index"),
-				options: [{
-				      value: '选项1',
-				      label: '镇上'
-				    }, {
-				      value: '选项2',
-				      label: '乡下'
-				    }],
-				    value: '',
-					tableData: [{
-						date: '2016-05-03',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄',
-					}, {
-						date: '2016-05-02',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄'
-					}, {
-						date: '2016-05-04',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄'
-					}, {
-						date: '2016-05-01',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄'
-					}, {
-						date: '2016-05-08',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄'
-					}, {
-						date: '2016-05-06',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄'
-					}, {
-						date: '2016-05-07',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄'
-					}],
-					count: 0,
-					multipleSelection: []
+				isshow: false,
+				aaa: 'aaa',
+				isadd: true,
+				msg: "",
+				uid: 0,
+				userid: 0,
+				name: "",
+				pwd: "",
+				role: "",
+				list: [],
+				num:100
 			}
 		},
 		methods: {
-			handleSelect(key, keyPath) {
-				localStorage.setItem("index",key)
-				console.log(key, keyPath);
-				if(key==4){
-					this.$router.push({
-						path: '/baoming'
-					})
-				}if(key==1){
-					this.$router.push({
-						path: '/login'
-					})
-				}
+			updata(i) {
+				this.isshow = true;
+				this.msg = "账户编辑";
+				this.uid = i;
+				this.isadd = false;
+				this.userid = this.list[i].id;
+				this.name = this.list[i].name;
+				this.pwd = this.list[i].pwd;
+				this.role = this.list[i].role
 			},
-			toggleSelection(rows) {
-				if (rows) {
-					rows.forEach(row => {
-						this.$refs.multipleTable.toggleRowSelection(row);
-					});
+			del(i) {
+				var _this=this;
+				this.userid=this.list[i].id;
+				console.log(_this.userid);
+				axios.post(
+					"http://127.0.0.1:8000/api/delete_user/", {
+					"pk":_this.userid
+					}).then(function(){
+						_this.list.splice(i, 1)
+						location.reload()
+					})
+			},
+			add() {
+				this.isadd = true;
+				this.isshow = true;
+				this.msg = "账户添加";
+			},
+			enter1() {
+				this.isshow = false;
+				var _this = this;
+				if(this.isadd) {
+					console.log(_this.name, _this.pwd)
+					axios.post(
+						"http://127.0.0.1:8000/api/create_user/", {
+							"name": _this.name,
+							"pwd": _this.pwd,
+							"role": _this.role
+						}).then(function(data) {
+						console.log(data);
+						location.reload()
+					})
 				} else {
-					this.$refs.multipleTable.clearSelection();
+					console.log(_this.userid);
+					axios.put(
+						"http://127.0.0.1:8000/api/update_user/",{
+							"pk":_this.userid,
+							"name": _this.name,
+							"pwd": _this.pwd,
+							"role": _this.role
+						}).then(function(data) {
+						console.log(data);
+						location.reload()
+					})
+
 				}
 			},
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-			}
+			cencel() {
+				this.isshow = false;
+				this.name = "";
+				this.pwd = "";
+				this.role = "";
+			}		
+		},
+		mounted() {
+			var _this = this;	
+			axios.get("http://127.0.0.1:8000/api/get_users/?page=1").then(function(data) {
+				_this.list = data.data.data
+				console.log(data.data);
+				_this.num=data.data.count;
+			})
+		$(".el-pager li").on("click",function(){
+			var pageNum=$(this).html();
+			console.log(pageNum)
+			axios.get(
+				"http://127.0.0.1:8000/api/get_users/?page="+pageNum).then(function(data) {
+				_this.list = data.data.data
+				console.log(data.data);
+			})
+	
+		})
 		}
-	
 	}
-	
 </script>
 
-
-
-
-<style>
-	.el-header,
-	.el-footer {
-		background-color: #B3C0D1;
-		color: #333;
-		text-align: center;
-		line-height: 60px;
+<style scoped>
+	#index {
+		width: 1160px;
+		height: 650px;
+		margin: 50px auto;
+		border: 1px solid #cecece;
+	}
+	.indexRight {
+		width: 1160px;
+		height: 100%;
+		box-sizing: border-box;
+		padding-left: 200px;
+		float: right;
+		position: relative;
+	}
+	
+	.indexRight h2 {
+		text-align: left;
+	}
+	
+	.indexRight #adduser {
+		position: absolute;
+		top: 50px;
+		left: 200px;
+		width: 120px;
+		height: 32px;
+	}
+	
+	.indexRight .userList {
+		margin: 70px 10px;
+	}
+	
+	.indexRight .userList tr:first-child td {
+		border: 1px solid #CECECE;
+		width: 120px;
+		height: 30px;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.indexRight .userList tr {
+		border: 1px solid #CECECE;
+		margin-top: 5px
+	}
+	
+	.indexRight .userList td span {
+		border: 1px solid #CECECE;
+		padding: 2px 10px;
+		margin: 0 5px;
+		border-radius: 5px;
+		background: #C7C7CC;
+	}
+	
+	.indexRight .userList td span:hover {
+		background: #FF5053;
+	}
+	
+	.indexRight .msg {
+		width: 600px;
+		height: 500px;
+		background: #FFFFFF;
+		border: #f00 1px solid;
+		display: block;
+		margin: 120px auto;
+		border-radius: 20px;
+		box-sizing: border-box;
+		padding:10px;
+	}
+	
+	.indexRight .msg .msgChange {
+		width: 300px;
+		height: 40px;
+		box-sizing: border-box;
+		margin: 10px auto;
+		padding: 5px 0;
+	}
+	.indexRight .changePage{
+		position: absolute;
+		bottom: 50px;
+		right: 350px;
+		
 	}
 
-	.el-aside {
-		background-color: #D3DCE6;
-		color: #333;
-		text-align: center;
-		line-height: 200px;
-	}
-
-	.el-main {
-		background-color: #E9EEF3;
-		color: #333;
-		text-align: center;
-		line-height: 160px;
-	}
-
-	body>.el-container {
-		margin-bottom: 40px;
-	}
-
-	.el-container:nth-child(5) .el-aside,
-	.el-container:nth-child(6) .el-aside {
-		line-height: 260px;
-	}
-
-	.el-container:nth-child(7) .el-aside {
-		line-height: 320px;
-	}
 </style>

@@ -100,7 +100,7 @@
 				this.userid=this.list[i].id;
 				console.log(_this.userid);
 				axios.post(
-					"http://192.168.43.221:8001/api/delete_user/", {
+					"http://127.0.0.1:8000/api/delete_user/", {
 					"pk":_this.userid
 					}).then(function(){
 						_this.list.splice(i, 1)
@@ -117,7 +117,7 @@
 				if(this.isadd) {
 					console.log(_this.name, _this.pwd)
 					axios.post(
-						"http://192.168.43.221:8001/api/create_user/", {
+						"http://127.0.0.1:8000/api/create_user/", {
 							"name": _this.name,
 							"pwd": _this.pwd,
 							"role": _this.role
@@ -127,7 +127,7 @@
 				} else {
 					console.log(_this.userid);
 					axios.put(
-						"http://192.168.43.221:8001/api/update_user/",{
+						"http://127.0.0.1:8000/api/update_user/",{
 							"pk":_this.userid,
 							"name": _this.name,
 							"pwd": _this.pwd,
@@ -147,7 +147,7 @@
 		},
 		mounted() {
 			var _this = this;	
-			axios.get("http://192.168.43.221:8001/api/get_users/?page=1").then(function(data) {
+			axios.get("http://127.0.0.1:8000/api/get_users/?page=1").then(function(data) {
 				_this.list = data.data.data
 				console.log(data.data);
 				_this.num=data.data.count;
@@ -156,7 +156,7 @@
 			var pageNum=$(this).html();
 			console.log(pageNum)
 			axios.get(
-				"http://192.168.43.221:8001/api/get_users/?page="+pageNum).then(function(data) {
+				"http://127.0.0.1:8000/api/get_users/?page="+pageNum).then(function(data) {
 				_this.list = data.data.data
 				console.log(data.data);
 			})
